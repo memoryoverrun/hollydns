@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["libdns", "libresolve", "libruntime"]
-default-members = ["stock-bot"]
+members = [ "app","dns", "resolve", "runtime"]
+default-members = ["app"]
 
 [profile.release]
 debug = true
