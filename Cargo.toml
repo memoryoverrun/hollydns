@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = [ "app","dns", "resolve", "runtime"]
+members = [ "app", "common","dns", "resolve", "runtime"]
 default-members = ["app"]
 
 [profile.release]
