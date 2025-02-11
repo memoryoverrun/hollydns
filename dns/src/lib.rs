@@ -1,3 +1,11 @@
 pub mod r#type;
-pub mod flag;
+pub mod r#class;
 pub mod record;
+pub mod message;
+mod errors;
+mod header;
+mod packet;
+mod question;
+mod label;
+mod dname;
+type ID = u16;

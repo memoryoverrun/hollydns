@@ -11,6 +11,7 @@ debug = true
 
 [workspace.dependencies]
 anyhow = "1.0"
+bitflags = "2.8.0"
 chrono = "0.4"
 cron = "0.12.1"
 rand = "0.8.5"
