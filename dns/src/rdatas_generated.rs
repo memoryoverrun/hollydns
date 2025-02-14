@@ -1,0 +1,1 @@
+pub mod a { include!("rdatas/a.rs"); }

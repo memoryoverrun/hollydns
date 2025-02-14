@@ -3,7 +3,7 @@ use std::fmt::Display;
 use crate::{errors::{dns_error, DnsError}, packet::Packet};
 
 #[derive(Debug, Eq, Clone)]
-pub(crate) struct Label<'a> {
+pub struct Label<'a> {
     length: u8,
     values: &'a [u8],
 }
@@ -77,7 +77,7 @@ impl<'a> PartialEq for Label<'a> {
     }
 }
 
-pub(crate) const ROOT_LABEL: Label<'static> = Label {
+pub const ROOT_LABEL: Label<'static> = Label {
     length: 0,
     values: &[],
 };
@@ -133,16 +133,16 @@ mod tests {
 
     #[test]
     fn test_label_check() {
-        let label = Label::new(1, b"a");
-        assert!(label.check().is_ok());
-        let label = Label::new(1, b"A");
-        assert!(label.check().is_ok());
-        let label = Label::new(1, b"#");
-        assert!(label.check().err().unwrap() == dns_error::DNS_ERROR_INVALID_CHARACTER);
+        let label = Label::new(b"a");
+        assert!(label.is_ok());
+        let label = Label::new(b"A");
+        assert!(label.is_ok());
+        let label = Label::new(b"#");
+        assert!(label.err().unwrap() == dns_error::DNS_ERROR_INVALID_CHARACTER);
         let values = vec![b'a'; 256];
-        let label = Label::new(256, &values);
-        assert!(label.check().err().unwrap() == dns_error::DNS_ERROR_LABEL_TOO_LONG);
-        let label = Label::new(100, b"a");
-        assert!(label.check().err().unwrap() == dns_error::DNS_ERROR_LABEL_LENGTH_MISMATCH);
+        let label = Label::new(&values);
+        assert!(label.err().unwrap() == dns_error::DNS_ERROR_LABEL_TOO_LONG);
+        let label = Label::new(b"a");
+        assert!(label.err().unwrap() == dns_error::DNS_ERROR_LABEL_LENGTH_MISMATCH);
     }
 }

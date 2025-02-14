@@ -1,9 +1,9 @@
-use crate::header::Header;
+use crate::{header::Header, question::Question, rdatas::RData, record_set::RecordSet};
 
-pub struct Message {
+pub struct Message<'a> {
     pub header: Header,
-    pub questions: Vec<Question>,
-    pub answers: Vec<ResourceRecord>,
-    pub authorities: Vec<ResourceRecord>,
-    pub additional: Vec<ResourceRecord>,
+    pub questions: Question<'a>,
+    pub answers: Vec<RecordSet<'a, Box<dyn RData>>>,
+    pub authorities: Vec<RecordSet<'a, Box<dyn RData>>>,
+    pub additional: Vec<RecordSet<'a, Box<dyn RData>>>
 }

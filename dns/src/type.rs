@@ -1,8 +1,10 @@
+use std::fmt::Display;
+
 use common_macros::EnumConversions;
 
 #[derive(Debug, PartialEq, EnumConversions)]
 #[repr(u16)]
-enum Type {
+pub enum Type {
     A = 1,
     NS,
     MD,
@@ -68,6 +70,13 @@ enum Type {
     ZONEMD,
     SVCB,
     HTTPS,
+    ANY = 255,
+}
+
+impl Display for Type {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
 }
 
 #[cfg(test)]

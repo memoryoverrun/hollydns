@@ -1,7 +1,7 @@
 use std::{error::Error, fmt::{Debug, Display}};
 
 #[derive(Debug, Eq)]
-pub(crate) struct DnsError<'a>(i32, &'a str);
+pub struct DnsError<'a>(i32, &'a str);
 
 impl<'a> Display for DnsError<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -17,7 +17,7 @@ impl<'a> PartialEq for DnsError<'a> {
 
 impl<'a> Error for DnsError<'a> {}
 
-pub(crate) mod dns_error {
+pub mod dns_error {
     use super::DnsError;
 
     // header errors
@@ -36,4 +36,8 @@ pub(crate) mod dns_error {
     pub const DNS_ERROR_INVALID_LABEL: DnsError = DnsError(100009, "Invalid label");
     pub const DNS_ERROR_INVALID_DNAME: DnsError = DnsError(100010, "Invalid dname");
     pub const DNS_ERROR_DNAME_TOO_LONG: DnsError = DnsError(100011, "Dname is too long");
+    pub const DNS_ERROR_INVALID_POINTER_OFFSET: DnsError = DnsError(100012, "Invalid pointer offset");
+    // packet errors
+    pub const DNS_ERROR_PACKET_NOT_ENOUGH_SPACE: DnsError = DnsError(100013, "Packet not enough space");
+    pub const DNS_ERROR_PACKET_NO_MORE_DATA: DnsError = DnsError(100014, "Packet no more data");
 }

@@ -7,7 +7,7 @@ use crate::{errors::{dns_error, DnsError}, packet, ID};
 
 bitflags! {
     #[derive(Debug, Clone, Copy)]
-    struct Flags: u16 {
+    pub struct Flags: u16 {
         const FLAG_QR = 0b0000_0000_0000_0001;
         const FLAG_OPCODE = 0b0000_0000_0001_1110;
         const FLAG_AA = 0b0000_0000_0010_0000;
@@ -97,7 +97,7 @@ impl Flags {
 
 #[derive(Debug, EnumConversions)]
 #[repr(u16)]
-enum OpCode {
+pub enum OpCode {
     Query,
     IQuery,
     Status,
@@ -107,7 +107,7 @@ enum OpCode {
 
 #[derive(Debug, EnumConversions)]
 #[repr(u16)]
-enum RCode {
+pub enum RCode {
     NoError,
     FormatError,
     ServerFailure,
@@ -117,7 +117,7 @@ enum RCode {
 }
 
 #[repr(packed)]
-pub(crate) struct Header {
+pub struct Header {
     id: ID,
     flags: Flags,
     qd_count: u16,
@@ -182,13 +182,13 @@ impl Header {
     }
 
     pub fn pack(&self, packet: &mut packet::Packet) {
-        packet.pack_u16(self.id);
+        packet.write_u16(self.id);
         let flags = self.flags;
-        packet.pack_u16(flags.bits());
-        packet.pack_u16(self.qd_count);
-        packet.pack_u16(self.an_count);
-        packet.pack_u16(self.ns_count);
-        packet.pack_u16(self.ar_count);
+        packet.write_u16(flags.bits());
+        packet.write_u16(self.qd_count);
+        packet.write_u16(self.an_count);
+        packet.write_u16(self.ns_count);
+        packet.write_u16(self.ar_count);
     }
 }
 
